@@ -1,0 +1,71 @@
+.base_post {
+  margin-top: 10px;
+  border-radius: 8px;
+}
+.user_profile_base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.post_option {
+  font-size: 20px;
+  color: var(--fontColorC);
+}
+.profile_img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50px;
+  box-shadow: 2px 2px 4px 1px #b7bdc1, -1px -1px 4px 1px white;
+  margin-right: 8px;
+  padding: 4px;
+}
+.post_data {
+  margin-top: 10px;
+}
+.img_bg {
+  margin: 15px;
+}
+.img {
+  width: 100%;
+  max-height: 460px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #2c2f31;
+}
+
+.like_comments {
+}
+.total_like {
+  background: var(--fontColorD);
+  padding: 2px;
+  border-radius: 25px;
+  height: 21px;
+}
+.total_like_icon {
+  background: var(--fontColorD);
+  margin: 4px;
+  font-size: 13px;
+  color: var(--baseColor);
+}
+.like_count {
+  font-size: 17px;
+  margin-left: 5px;
+  color: var(--fontColorD);
+  text-shadow: 0.2px 0.3px 1.4px var(--textshadow);
+}
+.comments {
+  font-size: 17px;
+  color: var(--fontColorD);
+  text-shadow: 0.2px 0.3px 1.4px var(--textshadow);
+}
+hr {
+  height: 1px;
+  background: #b9c1c6;
+  border: none;
+  margin: 10px;
+}
+.like_content{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

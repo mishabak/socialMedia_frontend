@@ -1,0 +1,15 @@
+:root {
+  --baseColor: #e8ecef;
+  --secondColor: #ebecf1;
+  --boxLight: #fcfcfd;
+  --boxDark: #cad5dd;
+  --boxDark2:#a3b3be; /* for use status box shadow */
+  --boxDarkIcon: #a5c7db;
+  --fontColorA: #58778f; /* dark color*/
+  --fontColorB: #888b86; /* light color*/
+  --fontColorC: #616d7a; /* icon color*/
+  --fontColorD: #445968;
+  --textshadow: #b0b4b7;
+  --borderColor: #e6ebee;
+  --hoverA: #616d7a;
+}

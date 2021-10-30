@@ -1,0 +1,12 @@
+.base_style{
+  width: 100%;
+  background: var(--baseColor);
+  box-shadow: 3px 4px 5px 1px var(--boxDark) inset , -3px -4px 5px 1px var(--boxLight) inset;
+  padding: 10px;
+  margin-top: 14px;
+  /* border: solid 1px #e0e1e1; */
+  border-radius: 10px;
+}
+.flex {
+  display: flex;
+}

@@ -1,0 +1,109 @@
+.base_new_post {
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 3px 4px 5px 1px var(--boxDark), -3px -4px 4px 1px var(--boxLight);
+  margin-left: 70px;
+  margin-right: 70px;
+}
+
+.sub_new_post {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile_img {
+  border-radius: 50px;
+  box-shadow: 4px 4px 3px 3px var(--boxDark2), -4px -4px 2px 3px var(--boxLight);
+  margin-right: 20px;
+  width: 40px;
+  height: 40px;
+}
+.post_input {
+  border: solid var(--borderColor) 2px;
+  box-shadow: 3px 4px 5px 1px var(--boxDark) inset,
+    -3px -4px 5px 1px var(--boxLight) inset;
+  height: 40px;
+  width: 100%;
+  border-radius: 20px;
+  background: var(--baseColor);
+  padding-left: 10px;
+  cursor: pointer;
+}
+.text_style {
+  font-size: 17px;
+  color: var(--fontColorB);
+  text-shadow: 0.2px 0.2px 0.2px var(--textshadow);
+}
+.select_item {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  color: var(--fontColorD);
+  text-shadow: 0.2px 0.3px 1.4px var(--textshadow);
+  font-size: 18px;
+  
+}
+span {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 778px) {
+  span {
+    font-size: 16px;
+  }
+}
+@media(max-width:1150px){
+    .base_new_post {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+}
+@media(max-width:1000px){
+    .base_new_post {
+        margin-left: 70px;
+        margin-right: 70px;
+      }
+}
+@media(max-width:790px){
+    .base_new_post {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+}
+@media(max-width:700px){
+    .base_new_post {
+        margin-left: 70px;
+        margin-right: 70px;
+      }
+}
+@media(max-width:550px){
+    .base_new_post {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+}
+@media(max-width:476px){
+    .text_style {
+        font-size: 14px;
+       
+      }
+}
+@media(max-width:400px){
+    .base_new_post {
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+}
+@media (max-width: 382px) {
+  span {
+    font-size: 13px;
+  }
+  /* .base_new_post {
+    margin-left: 70px;
+    margin-right: 70px;
+  } */
+}
+.post_icons {
+  margin-right: 5px;
+}
