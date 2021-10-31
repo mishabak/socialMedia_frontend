@@ -61,6 +61,7 @@ function SignUp() {
       setValidEmail(false)
     })
   },[currentEmail])
+  
   useEffect(()=>{
     var data ={phone:`+91${formic.values.phone}`}
     axios.post(`${server}/exist-phone`,data).then(()=>{
@@ -69,12 +70,13 @@ function SignUp() {
       setValidPhone(false)
     })
   },[currentPhone])
-  useEffect(()=>{
-    const token = cookies.get('userJwt')
-    if(token){
-      history.push('/')
-    }
-  })
+
+  // useEffect(()=>{
+  //   const token = cookies.get('userJwt')
+  //   if(token){
+  //     history.push('/')
+  //   }
+  // })
   const validation =values =>{
     const error ={}
     // for validate required elements
@@ -128,6 +130,7 @@ function SignUp() {
     }
     return error;
   }
+
   const formic = useFormik({
     initialValues:initialValues,
     validate:validation,
@@ -173,8 +176,7 @@ function SignUp() {
             <div class='date'>
                <Select class="date-input" onChange={selectObject[0].onChange} name={selectObject[0].name}>{dayOption.map((obj)=>{return <Option text={obj}></Option>})}</Select>
                <Select class="date-input" onChange={selectObject[1].onChange} name={selectObject[1].name}>{monthOption.map((obj)=>{return <Option text={obj}></Option>})}</Select>
-               <Select class="date-input" onChange={selectObject[2].onChange} name={selectObject[2].name}>{yearOption.map((obj)=>{return <Option text={obj}></Option>})}</Select>
-               
+               <Select class="date-input" onChange={selectObject[2].onChange} name={selectObject[2].name}>{yearOption.map((obj)=>{return <Option text={obj}></Option>})}</Select>       
             </div>
             {formic.errors && formic.touched.day && formic.touched.month && formic.touched.year?<h1 style={{fontSize:'12px',color:'#808ea2',textAlign:'center'}}>{formic.errors.day}</h1>:null}
             <h5 className="text-grey birthday">Gender</h5>
