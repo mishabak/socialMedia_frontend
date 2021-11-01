@@ -45,7 +45,6 @@ function SignUp() {
   }
   const onSubmit =(values)=>{
     axios.post(`${server}/sign-up`,values).then((response)=>{
-      // console.log(response.data.userId);
     cookies.set('userJwt',response.data.token)
     localStorage.setItem('userId',response.data.userId)
     localStorage.setItem('userName',response.data.userName)
@@ -70,13 +69,13 @@ function SignUp() {
       setValidPhone(false)
     })
   },[currentPhone])
-
   // useEffect(()=>{
   //   const token = cookies.get('userJwt')
   //   if(token){
   //     history.push('/')
   //   }
   // })
+  cookies.remove('userJwt')
   const validation =values =>{
     const error ={}
     // for validate required elements
