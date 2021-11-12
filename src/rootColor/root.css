@@ -12,4 +12,14 @@
   --textshadow: #b0b4b7;
   --borderColor: #e6ebee;
   --hoverA: #616d7a;
+  --onlineUser:#45b46bab;  /* for right sidebar */
+
+  --rs-carousel-bg: #8e8e93;  /* for carousel */
+  --rs-carousel-indicator: rgba(255, 255, 255, 0.4);
+  --rs-carousel-indicator-hover: rgb(135, 110, 110);
+  --rs-carousel-indicator-active: #3498ff;
+
+  
+  
 }
+

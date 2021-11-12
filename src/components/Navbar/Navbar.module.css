@@ -50,10 +50,10 @@ body {
 .box_shadow_icon:hover {
   border: solid var(--borderColor) 2px;
   box-shadow: 3px 4px 4px 1px var(--boxLight),
-    -3px -4px 4px 1px var(--boxDarkIcon);
+    -3px -3px 4px 1px var(--boxDarkIcon);
   cursor: pointer;
-  background: var(--hoverA);
-  color: var(--baseColor);
+  /* background: var(--hoverA); */
+  color: var(--fontColorD);
 }
 .pl_1 {
   padding-left: 8px;

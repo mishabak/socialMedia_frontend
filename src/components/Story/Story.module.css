@@ -4,16 +4,17 @@
 }
 .story_base {
   width: 818px;
-  overflow-x: auto;
+  overflow-x:auto;
   scrollbar-width: thin;
+  /* scrollbar-color: rgb(40, 39, 41) rgb(209, 215, 209); */
 }
+
 .story {
   width: 120px;
   height: 185px;
   margin: 10px;
   border-radius: 7px;
   box-shadow: 4px 4px 3px 3px var(--boxDark2), -4px -4px 2px 3px var(--boxLight);
-  
 }
 @media (max-width: 580px) {
   .story {

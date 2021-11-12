@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Monda&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+.base {
+  background: #b6c3cea1;
+  width: 100%;
+  height: 100vh;
+  z-index: 15;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.innerDiv {
+  width: 500px;
+  height: 200px;
+  background-color: var(--baseColor);
+  box-shadow: 0px 0px 7px 1px #868e95;
+  border-radius: 10px;
+}
+.heading {
+  text-align: center;
+}
+.closeIcon {
+  float: right;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  font-size: 20px;
+  color: black;
+}
+.textarea_style {
+  width: 100%;
+  height: 150px;
+  resize: none;
+  border: none;
+  font-size: 22px;
+  scrollbar-width: thin;
+  
+}
+@media(max-width:558px){
+  .textarea_style{
+    font-size: 18px;
+  }
+}
+.contentDiv {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 0px 5px 1px #d4cece;
+  border-radius: 6px;
+  margin-top: 11px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+.iconDiv {
+  align-self: center;
+  display: flex;
+  justify-content: space-around;
+  width: 100px;
+}
+.postIconLeft {
+  margin-left: 10px;
+  font-size: 14px;
+  background: linear-gradient(330deg, #e05252 0%, #99e052 25%, #52e0e0 50%, #9a72c2 75%, #e05252 100%);
+color: black;
+border-radius: 5px;
+padding: 3px;
+}
+.postIcon {
+  margin-left: 10px;
+  font-size: 20px;
+}
+.postIconRight {
+  float: right;
+  margin-right: 10px;
+  font-size: 21px;
+  color: #be5285;
+}
+.bgImage {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  align-items: center;
+}
+.postFrame {
+  box-shadow: 0px 0px 3px 0.6px #d0d8db;
+  border-radius: 8px;
+  overflow: hidden;
+}
+textarea:focus {
+  outline: none;
+}
+.userProfileImg {
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 3px 1px #76828e;
+}
+.userProfileDiv {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  padding: 5px;
+  width: 100%;
+  text-shadow: 0.2px 0.3px 1.4px var(--textshadow);
+}
+.userName {
+  margin-left: 5px;
+}
+.submitButton {
+  margin-top: 6px;
+  border-radius: 6px;
+  width: 100%;
+  color: white;
+  border: none;
+  height: 30px;
+  background: rgb(95, 173, 201);
+  box-shadow: 0px 0px 4px 0.7px rgb(205, 197, 197);
+}
+.textPostBackground{
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  border-radius: 3px;
+}
+.textPostBackgroundDiv{
+display: flex;
+}
+.bg1{
+  background: rgba(0, 0, 0, 0)
+  linear-gradient(20deg, rgb(36, 62, 82), rgb(68, 168, 178), rgb(58, 82, 99))
+  repeat scroll 0% 0%;
+}
+.bg2{
+  background: rgba(0, 0, 0, 0)
+  linear-gradient(20deg, rgb(36, 62, 82), rgb(201, 141, 141), rgb(58, 82, 99))
+  repeat scroll 0% 0%;
+}
+.bg3{
+  background: rgba(0, 0, 0, 0)
+  linear-gradient(20deg, rgb(36, 62, 82), rgba(29, 171, 17, 0.25), rgb(58, 82, 99))
+  repeat scroll 0% 0%;
+}
+.bg4{
+  background: rgba(0, 0, 0, 0) 
+  linear-gradient(20deg, rgb(180, 131, 37), rgb(144, 36, 36), rgb(0, 69, 118)) 
+  repeat scroll 0% 0%;
+
+}
+.bg5{
+  background: rgba(192, 33, 33, 0) 
+  linear-gradient(20deg, rgb(0, 0, 0), rgba(42, 109, 112, 0.85), rgb(0, 0, 0)) 
+  repeat scroll 0% 0%
+
+}
+.fontColorInitial{
+  color: rgb(0, 0, 0);
+}
+.fontColorAfter{
+  color: rgb(255, 255, 255);
+  font-family: initial;
+
+}
+.createPostStyle{
+  text-shadow:  0.2px 0.3px 1.4px var(--textshadow);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: black;
+}

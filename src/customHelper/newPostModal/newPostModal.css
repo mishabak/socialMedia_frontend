@@ -1,0 +1,29 @@
+.ReactModal__Content{
+width: 500px;
+}
+.emoji-picker-react{
+    height: 210px !important;
+    width: 100% !important;
+    border: none !important;
+    box-shadow: 0px 0px 3px 0.6px #d0d8db !important;
+    border-radius: 7px !important;
+    top: 10px !important;
+    margin-bottom: 10px!important;
+}
+
+@media(max-width:558px){
+    .ReactModal__Content{
+        width: 390px;
+        }
+}
+@media(max-width:446px){
+    .ReactModal__Content{
+        width: 330px;
+        }
+}
+@media(max-width:386px){
+    .ReactModal__Content{
+        width: 280px;
+        }
+}
+

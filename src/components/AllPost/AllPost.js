@@ -9,10 +9,7 @@ function AllPost() {
         <div className={`${HomeCSS.base_style}`}>
             <Story/>
             <NewPost/>
-            <FriendPost/>
-            <FriendPost/>
-            <FriendPost/>
-            
+            <FriendPost/>       
         </div>
     )
 }

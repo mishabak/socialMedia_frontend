@@ -11,11 +11,11 @@ function Story() {
             size(window.innerWidth-506); // for set dynamic width 
          } 
       }
-      
+      var a = document.getElementById('hello')
       useEffect(()=>{
           updateSize()
-         
         },[storyWidth])
+
       window.addEventListener('resize', updateSize);
     return (
         

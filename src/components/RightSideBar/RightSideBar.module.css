@@ -2,16 +2,15 @@
   padding-top: 11px;
   padding-left: 11px;
   padding-bottom: 11px;
-  
-  
 }
 .inner_div {
-  width: 220px;
+  width: 213px;
   border-radius: 8px;
   text-align: center;
   max-height: 100vh;
   overflow-y: auto;
   scrollbar-width: thin;
+  margin-right: -7px;
 }
 .inner_data {
   margin: 12px;
@@ -19,6 +18,10 @@
   display: flex;
   align-items: center;
   height: 40px;
+}
+
+.inner_data:hover {
+  box-shadow: 3px 2px 3px 1px var(--boxLight), -3px -2px 3px 1px var(--boxDark);
 }
 .text_color_d {
   color: var(--fontColorD);
@@ -28,15 +31,29 @@
   width: 25px;
   height: 25px;
   border-radius: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
-  
-  overflow:hidden;
+  margin-left: 5px;
+  margin-right: 6px;
+  overflow: hidden;
 }
-.position_sticky{
+.position_sticky {
   position: sticky;
   top: 65px;
 }
-.font_size{
-    font-size: 12px;
+.font_size {
+  font-size: 12px;
+}
+.onlineUser {
+  width: 13px;
+  height: 13px;
+  border-radius: 10px;
+  background-color: var(--onlineUser);
+  position: absolute;
+  margin-left: 167px;
+  box-shadow: 3px 2px 3px 1px var(--boxDark), -3px -2px 3px 1px var(--boxLight);
+}
+.onlineUser:hover{
+  background-color:#11c04ed2;
+}
+.inner_data:hover > .onlineUser  {
+  background-color:#11c47cd2;
 }

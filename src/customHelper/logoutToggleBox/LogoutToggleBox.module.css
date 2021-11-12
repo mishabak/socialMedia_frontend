@@ -1,0 +1,28 @@
+.baseDiv{
+    width: 220px;
+height: 135px;
+background: var(--baseColor);
+position: fixed;
+z-index: 9;
+right: 7px;
+box-shadow: 3px 2px 3px 1px var(--boxDark) inset, -3px -2px 3px 1px var(--boxLight)inset;
+margin-top: 13px;
+border-radius: 8px;
+}
+.innerDiv{
+    margin: 10px;
+    text-shadow: 0.2px 0.3px 1.2px var(--textshadow);
+}
+.pTag{
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding-left: 10px;
+    color: var(--fontColorD);
+    font-weight: 600;
+}
+.pTag:hover{
+    color: rgb(237, 237, 237);
+    background-color:#616d7a82;
+    border-radius: 3px;
+}

@@ -16,6 +16,9 @@
   align-items: center;
   height: 40px;
 }
+.inner_data:hover{
+  box-shadow: 3px 2px 3px 1px var(--boxLight), -3px -2px 3px 1px var(--boxDark);
+}
 .text_color_d {
   color: var(--fontColorD);
   text-shadow: 0.2px 0.3px 1.4px var(--textshadow);

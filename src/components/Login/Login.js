@@ -60,13 +60,14 @@ function Login() {
       });
     },
   });
+  console.log(formik.values)
 
-  // useEffect(() => {
-  //   const token = cookies.get("userJwt");
-  //   if (token) {
-  //     history.push("/");
-  //   }
-  // });
+  useEffect(() => {
+    const token = cookies.get("userJwt");
+    if (token) {
+      history.push("/");
+    }
+  });
 
   return (
     <div className={LoginCSS.container}>
