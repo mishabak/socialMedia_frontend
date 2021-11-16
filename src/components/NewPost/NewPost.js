@@ -15,8 +15,9 @@ function NewPost() {
             <img className={`${New_Post.profile_img}`} src="annabelle.jpg"  alt="" />
             <Input readonly={'readonly'} onclick ={enableModal} placeholder={`What's on your mind, ${localStorage.getItem('userName')}?`} class={`${New_Post.post_input} ${New_Post.text_style}`}/>
             </div>
-            <div className={`${New_Post.select_item}`}><span onClick={enableModal} className={New_Post.cursorStyle} > <FaImage className={`${New_Post.post_icons}`}/> Photo/Video</span> <span onClick={enableModal}  className={New_Post.cursorStyle} ><FaImage className={`${New_Post.post_icons}`}/> Feeling/Activity</span></div>
+            <div className={`${New_Post.select_item}`}><span onClick={enableModal} className={New_Post.cursorStyle} > <FaImage className={`${New_Post.post_icons}`}/> Photo/Video</span> <span onClick={enableModal}  className={New_Post.cursorStyle} ><FaImage className={`${New_Post.post_icons}`}/> Feeling/Celebration</span></div>
                  <NewPostModal modalIsOpen = {modalIsOpen} setIsOpen={setIsOpen} />
+                 
             
         </div>
     )

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Button(obj) {
     return (
-        <button style={obj.style} className={obj.class} type={obj.type} onclick={obj.click}>{obj.text}</button>
+        <button style={obj.style} title={obj.title} className={obj.class} type={obj.type} onClick={obj.click}>{obj.text}</button>
     )
 }
 

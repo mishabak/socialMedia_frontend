@@ -39,10 +39,9 @@
   border: none;
   font-size: 22px;
   scrollbar-width: thin;
-  
 }
-@media(max-width:558px){
-  .textarea_style{
+@media (max-width: 558px) {
+  .textarea_style {
     font-size: 18px;
   }
 }
@@ -64,10 +63,17 @@
 .postIconLeft {
   margin-left: 10px;
   font-size: 14px;
-  background: linear-gradient(330deg, #e05252 0%, #99e052 25%, #52e0e0 50%, #9a72c2 75%, #e05252 100%);
-color: black;
-border-radius: 5px;
-padding: 3px;
+  background: linear-gradient(
+    330deg,
+    #e05252 0%,
+    #99e052 25%,
+    #52e0e0 50%,
+    #9a72c2 75%,
+    #e05252 100%
+  );
+  color: black;
+  border-radius: 5px;
+  padding: 3px;
 }
 .postIcon {
   margin-left: 10px;
@@ -97,7 +103,7 @@ textarea:focus {
   width: 25px;
   height: 25px;
   border-radius: 20px;
-  box-shadow: 0px 0px 3px 1px #76828e;
+  box-shadow: 0px 0px 3px 1px #aca3a3;
 }
 .userProfileDiv {
   display: flex;
@@ -120,54 +126,125 @@ textarea:focus {
   background: rgb(95, 173, 201);
   box-shadow: 0px 0px 4px 0.7px rgb(205, 197, 197);
 }
-.textPostBackground{
+.textPostBackground {
   width: 20px;
   height: 20px;
   margin-left: 5px;
   border-radius: 3px;
 }
-.textPostBackgroundDiv{
-display: flex;
+.textPostBackgroundDiv {
+  display: flex;
 }
-.bg1{
+.bg1 {
   background: rgba(0, 0, 0, 0)
-  linear-gradient(20deg, rgb(36, 62, 82), rgb(68, 168, 178), rgb(58, 82, 99))
-  repeat scroll 0% 0%;
+    linear-gradient(20deg, rgb(36, 62, 82), rgb(68, 168, 178), rgb(58, 82, 99))
+    repeat scroll 0% 0%;
 }
-.bg2{
+.bg2 {
   background: rgba(0, 0, 0, 0)
-  linear-gradient(20deg, rgb(36, 62, 82), rgb(201, 141, 141), rgb(58, 82, 99))
-  repeat scroll 0% 0%;
+    linear-gradient(20deg, rgb(36, 62, 82), rgb(201, 141, 141), rgb(58, 82, 99))
+    repeat scroll 0% 0%;
 }
-.bg3{
+.bg3 {
   background: rgba(0, 0, 0, 0)
-  linear-gradient(20deg, rgb(36, 62, 82), rgba(29, 171, 17, 0.25), rgb(58, 82, 99))
-  repeat scroll 0% 0%;
+    linear-gradient(
+      20deg,
+      rgb(36, 62, 82),
+      rgba(29, 171, 17, 0.25),
+      rgb(58, 82, 99)
+    )
+    repeat scroll 0% 0%;
 }
-.bg4{
-  background: rgba(0, 0, 0, 0) 
-  linear-gradient(20deg, rgb(180, 131, 37), rgb(144, 36, 36), rgb(0, 69, 118)) 
-  repeat scroll 0% 0%;
-
+.bg4 {
+  background: rgba(0, 0, 0, 0)
+    linear-gradient(20deg, rgb(180, 131, 37), rgb(144, 36, 36), rgb(0, 69, 118))
+    repeat scroll 0% 0%;
 }
-.bg5{
-  background: rgba(192, 33, 33, 0) 
-  linear-gradient(20deg, rgb(0, 0, 0), rgba(42, 109, 112, 0.85), rgb(0, 0, 0)) 
-  repeat scroll 0% 0%
-
+.bg5 {
+  background: rgba(192, 33, 33, 0)
+    linear-gradient(20deg, rgb(0, 0, 0), rgba(42, 109, 112, 0.85), rgb(0, 0, 0))
+    repeat scroll 0% 0%;
 }
-.fontColorInitial{
+.fontColorInitial {
   color: rgb(0, 0, 0);
 }
-.fontColorAfter{
+.fontColorAfter {
   color: rgb(255, 255, 255);
   font-family: initial;
-
 }
-.createPostStyle{
-  text-shadow:  0.2px 0.3px 1.4px var(--textshadow);
+.createPostStyle {
+  text-shadow: 0.2px 0.3px 1.4px var(--textshadow);
   text-align: center;
   margin-top: 0;
   margin-bottom: 0;
   color: black;
+}
+.uploadDataBaseDiv {
+  width: 100%;
+  /* background-color: rgba(67, 148, 101, 0.781); */
+  height: 160px;
+  overflow-y: auto;
+  position: relative;
+  scrollbar-width: thin;
+}
+
+.transprentFrame {
+  width: 492px;
+  height: max-content;
+  position: fixed;
+  height: 160px;
+  background-color: rgba(236, 229, 229, 0.49);
+  border-radius: 4px !important;
+}
+@media (max-width: 558px) {
+  .transprentFrame {
+    width: 382px;
+  }
+}
+@media (max-width: 446px) {
+  .transprentFrame {
+    width: 322px;
+  }
+}
+@media (max-width: 386px) {
+  .transprentFrame {
+    width: 272px;
+  }
+}
+.imgVideoBtnDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+.imgVideoPostBtn {
+  height: 37px;
+  color: #3f5872;
+  border: solid 2px #ecf3fb;
+  box-shadow: 0px 0px 4px 1.1px #9eafbd;
+  background: #e1e5e8;
+  border-radius: 6px;
+  margin: 5px;
+  padding: 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.368em;
+  font-weight: 700;
+}
+.postContentDiv {
+  width: 97%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.feelingAndActivitiesEmojis{
+height: 16px;
+width: 16px;
+border-radius: 16px;
+align-self: center;
+margin-left: 3px;
+margin-top: 6px;
+border: none;
 }
