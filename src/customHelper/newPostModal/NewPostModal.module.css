@@ -239,12 +239,25 @@ textarea:focus {
   flex-wrap: wrap;
 }
 
-.feelingAndActivitiesEmojis{
-height: 16px;
-width: 16px;
-border-radius: 16px;
-align-self: center;
-margin-left: 3px;
-margin-top: 6px;
-border: none;
+.feelingAndActivitiesEmojis {
+  height: 16px;
+  width: 16px;
+  border-radius: 16px;
+  align-self: center;
+  margin-left: 3px;
+  margin-top: 6px;
+  border: none;
+}
+.postVidImg {
+  box-shadow: rgb(151, 174, 174) 0px 0px 3px 1px;
+  object-fit: contain;
+  border-radius: 4px;
+  max-height: 140px;
+  margin: 5px;
+  width: 45%;
+}
+@media(max-width:448px){
+  .progressBarStyle{
+    width: 100% !important;
+  }
 }

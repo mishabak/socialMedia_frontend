@@ -1,3 +1,4 @@
+import { generateUploadURL ,deleteUploadedFILE} from '../../awsHelper/S3helper';
 import newPost_Feeling from './newPostFeeling.module.css'
 import newPost_modal from "./NewPostModal.module.css";
 import { React, useState, useEffect } from "react";
@@ -5,6 +6,7 @@ import Button from "../../UI/button/Button";
 import Picker from "emoji-picker-react";
 import Modal from "react-modal";
 import "./newPostModal.css";
+import axios from 'axios'
 import {
   FaChevronCircleLeft,
   FaClosedCaptioning,
@@ -18,7 +20,7 @@ import {
   FaCross,
   FaTh,
 } from "react-icons/fa";
-
+const server = 'http://localhost:3001'
 const customStyles = {
   content: {
     transform: "translate(-50%, -50%)",
@@ -32,17 +34,18 @@ const customStyles = {
 function NewPostModal(obj) {
   const [emojiFeelingCelebration,setEmojiFeelingCelebration]=useState(true) // if true show feelings and false show celebration
   const [choosedFeelings,setChoosedFeelings]=useState([false,null,null])
+  const [uploadVideoImage,setUploadVideoImage] = useState([])
   // const [chosenEmoji, setChosenEmoji] = useState(null);
   const [uploadingData,setUploadingData]=useState(false)
   const [modalIsOpen,setModalIsOpen] = useState(false)
+  const [uploadingBtn,setUploadingBtn]=useState(false)
   const [textPostBg, setTextPostBg] = useState(false);
   const [textAreaBg, setTextAreaBg] = useState(0);
   const [feelings,setFeelings] = useState(false);
+  const [postText,setPostText]=useState(null);
   const [emoji, setEmoji] = useState(false);
-  const [uploadImage,setUploadImage] = useState([])
-  const [uploadVideo,setUploadVideo] = useState([])
-  const [uploadingBtn,setUploadingBtn]=useState(false)
-  let [postText,setPostText]=useState(null)
+  const [postProgress,setPostProgress] = useState([]);
+  const [enableProgress,setEnableProgress]=useState(false)
   
  
   // function openModal() {
@@ -58,11 +61,10 @@ function NewPostModal(obj) {
   
   function closeModal() {
     setChoosedFeelings(false)
+    setUploadVideoImage([])
     setUploadingData(false)
     setModalIsOpen(false)
     obj.setIsOpen(false)
-    setUploadVideo([])
-    setUploadImage([])
     setFeelings(false)
     setPostText(null)
   }
@@ -77,7 +79,13 @@ function NewPostModal(obj) {
 
   const onEmojiClick = (event, emojiObject) => {
     // setChosenEmoji(emojiObject);
-    document.querySelector("#text_area").value += emojiObject.emoji;
+    var accessLimit = document.querySelector("#text_area").value
+    if(accessLimit.length>=140){
+    }else{
+      document.querySelector("#text_area").value += emojiObject.emoji;
+    }
+    var currentTextData= document.querySelector("#text_area").value
+    setPostText(currentTextData)
   };
   function controlEmoji() {
     emoji ? setEmoji(false) : setEmoji(true);
@@ -92,41 +100,10 @@ function NewPostModal(obj) {
   
  
   function fetchPostImageVideo(event) {
-    let blobURL = URL.createObjectURL(event.target.files[0]);
-    var data = document.getElementsByClassName("local")[0];
-    if(event.target.files[0].type.split("/")[0]=='video'){
-      var video = document.createElement('video') ;
-      video.style.boxShadow = 'rgb(151, 174, 174) 0px 0px 3px 1px' ;
-      video.style.objectFit='contain' ;
-      video.style.borderRadius='4px' ;
-      video.style.maxHeight='140px' ;
-      video.style.margin = '5px' ;
-      video.style.width = '45%' ;
-      video.src = blobURL ;
-      data.append(video)
-
-      // let reader = new FileReader();
-      // reader.onload = e =>{
-      //   console.log(e.target.result ,event.target.files[0]);
-      // }
-      // reader.readAsDataURL(event.target.files[0]); 
-      
-
-      setUploadVideo([...uploadVideo, event.target.files[0]]);
-    } else if (event.target.files[0].type.split("/")[0]=='image'){
-      var image = document.createElement('img') ;
-      image.style.boxShadow =  'rgb(151, 174, 174) 0px 0px 3px 1px' ;
-      image.style.objectFit='contain' ;
-      image.style.borderRadius='4px' ;
-      image.style.maxHeight='140px' ;
-      image.style.margin = '5px' ;
-      image.style.width = '45%' ;
-      image.src = blobURL ;
-      data.append(image) ;
-      setUploadImage([...uploadImage,event.target.files[0]]);
-    }
+    setUploadVideoImage([...uploadVideoImage, event.target.files[0]]);
+         setPostProgress([...postProgress,{percent:0}])
   }
-
+  
 
   function enableBgOption() {
     setTextPostBg(true);
@@ -139,8 +116,7 @@ function NewPostModal(obj) {
   }
   function controlActivities(){
     feelings?setFeelings(false):setFeelings(true)
-    setUploadVideo([])
-    setUploadImage([])
+    // setUploadVideoImage([])
   }
 
   function showCelebrationEmojies(){
@@ -151,8 +127,7 @@ function NewPostModal(obj) {
   }
   function cancelImgVideoOption(){
     setUploadingData(false)
-    setUploadVideo([])
-    setUploadImage([])
+    setUploadVideoImage([])
   }
   function chooseFeelingsActivity(e){
     setChoosedFeelings([true,e.target.firstChild.firstChild.src,e.target.lastChild.innerText])
@@ -170,31 +145,124 @@ function NewPostModal(obj) {
   }
   
   
-  let data={};
-  data.post=Array()
-  function submitData(){
-    data.userName =localStorage.getItem('userName')  
+  let uplodingDataToDb={};
+  uplodingDataToDb.post=Array()
+   async function submitData(){
+    uplodingDataToDb.userId =localStorage.getItem('userId')  
+    uplodingDataToDb.uploadingData = new Date()
            if (textAreaBg > 0 && postText) {
-            data.post.push({data:postText,type:'text',backgroundColor:'bg'+textAreaBg})
-           }
-          if (postText && textAreaBg==0) {
-            data.post.push({data:postText,type:'text'}) 
+            uplodingDataToDb.post.push({data:postText,type:'text',backgroundColor:'bg'+textAreaBg})
+              }
+           if (postText && textAreaBg==0 && uploadVideoImage.length==0) {
+            uplodingDataToDb.post.push({data:postText,type:'text'}) // if i can add default background here 
+              }
+
+           if(choosedFeelings[0] && choosedFeelings[1] && choosedFeelings[2]){
+            uplodingDataToDb.feelingsEmoji=choosedFeelings[1]
+            uplodingDataToDb.feelingsText =choosedFeelings[2]
+              }
+
+          if(uploadVideoImage.length>=1){ 
+            if(postText){
+              uplodingDataToDb.title = postText; 
+            }
+           var uploadCompleted=0;
+            uploadVideoImage.map(async(currentDetails,index)=>{
+
+              if(currentDetails.type.split('/')[0]=='video'){
+                setEnableProgress(true)
+                const options ={
+                  onUploadProgress:(progressEvent)=>{
+                  const {loaded,total} = progressEvent;
+                  let percent = Math.floor((loaded*100)/total)
+                  
+                  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                  if (loaded == 0) return console.log('0 Byte');
+                  var i = parseInt(Math.floor(Math.log(loaded) / Math.log(1024)));
+                  var loadingSize =   Math.round(loaded / Math.pow(1024, i), 2) + ' ' + sizes[i] 
+                  
+                  if (total == 0) return console.log('0 Byte');
+                  var i = parseInt(Math.floor(Math.log(total) / Math.log(1024)));
+                  var totalSize =  Math.round(total / Math.pow(1024, i), 2) + ' ' + sizes[i]
+                  
+                  postProgress.splice(index,1,{percent:percent,total:totalSize,loading:loadingSize})
+                  setPostProgress([...postProgress])
+                }
+              }
+                var videoURL = await  generateUploadURL()
+                const s3VideoPath = videoURL.split('?')[0]
+                uplodingDataToDb.post.push({data:s3VideoPath,type:'video'})
+
+                axios.put(videoURL,currentDetails,options).then((res)=>{
+                  uploadCompleted++
+                     if(postProgress.length===uploadCompleted){
+                      setEnableProgress(false)
+                      setPostProgress([])
+                      closeModal()
+                      axios.post(`${server}/post`,uplodingDataToDb).then((res)=>{
+
+                      })
+                     }
+                  console.log('uploaded video');
+                }).catch((err)=>{console.log(err,"i'am waiting..")})
+
+                
+
+              } else if(currentDetails.type.split('/')[0]=='image'){
+                setEnableProgress(true)
+                const options ={
+                    onUploadProgress:(progressEvent)=>{
+                    const {loaded,total} = progressEvent;
+                    let percent = Math.floor((loaded*100)/total)
+                    
+                    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                    if (loaded == 0) return console.log('0 Byte');
+                    var i = parseInt(Math.floor(Math.log(loaded) / Math.log(1024)));
+                    var loadingSize =   Math.round(loaded / Math.pow(1024, i), 2) + ' ' + sizes[i] 
+                    
+                    if (total == 0) return console.log('0 Byte');
+                    var i = parseInt(Math.floor(Math.log(total) / Math.log(1024)));
+                    var totalSize =  Math.round(total / Math.pow(1024, i), 2) + ' ' + sizes[i]
+                    postProgress.splice(index,1,{percent:percent,total:totalSize,loading:loadingSize})
+                    setPostProgress([...postProgress])
+                  }
+                }
+                var imageURL = await  generateUploadURL()
+                console.log(imageURL);
+                const s3ImagePath = imageURL.split('?')[0]
+                uplodingDataToDb.post.push({data:s3ImagePath,type:'image'})
+
+                  axios.put(imageURL,currentDetails,options).then(()=>{
+                    uploadCompleted++
+                     if(postProgress.length===uploadCompleted){
+                      setEnableProgress(false)
+                      setPostProgress([])
+                      closeModal()
+                      axios.post(`${server}/post`,uplodingDataToDb).then((res)=>{
+
+                      })
+                     }
+                       console.log('uploaded images');
+                     })
+              }
+            })
+          }else{
+            axios.post(`${server}/post`,uplodingDataToDb).then((res)=>{
+              closeModal()
+            })
+
           }
-          if(choosedFeelings[0] && choosedFeelings[1] && choosedFeelings[2]){
-            data.feelingsEmoji=choosedFeelings[1]
-            data.feelingsText =choosedFeelings[2]
-          }
-          console.log(uploadVideo,uploadImage);
   }
+
     useEffect(()=>{
-      if(uploadVideo.length>=1 || uploadImage.length>=1 ||postText){
+      if(uploadVideoImage.length>=1 || postText){
         setUploadingBtn(true)
       } else{
         setUploadingBtn(false)
       }
-
-    },[uploadVideo,uploadImage,postText])
      
+    },[uploadVideoImage,postText])
+   
   return (
     <Modal
       isOpen={obj.modalIsOpen}
@@ -203,7 +271,7 @@ function NewPostModal(obj) {
       style={customStyles}
       contentLabel="Example Modal"
     >
-      {feelings?<div>
+      {!enableProgress && feelings?<div>
 
         <div className={newPost_Feeling.innerBase} >  
         <FaChevronCircleLeft onClick={controlActivities} className={newPost_Feeling.backArrow}/> 
@@ -217,56 +285,56 @@ function NewPostModal(obj) {
         <div style={{display:'flex' ,flexWrap:'wrap'}}>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/yK/r/Iu45bu7idw4.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/yQ/r/TGmvhPYZHRc.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/happy.png`:'/feelingEmoji/friendship.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Happy':'friendShip'}</p>
         </div>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/SbLxX4jljCS.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/yA/r/78p5blttI6R.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/blessed.png`:'/feelingEmoji/birthday.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Blessed':'Birthday'}</p>
         </div>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/yB/r/jnaR01aXOKF.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/yL/r/wVys5GgT8vU.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/loved.png`:'/feelingEmoji/christmas.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Loved':'Christmas'}</p>
         </div>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/y0/r/MqU4w6kG_-T.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/9qrhs9f0C43.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/sad.png`:'/feelingEmoji/success.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Sad':'Success'}</p>
         </div>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/yb/r/8HG4ArhYqqm.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/yh/r/LqUZnnL1I6A.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/awesome.png`:'/feelingEmoji/specialday.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Awesome':'Special day'}</p>
         </div>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/yl/r/GTVH05GEVXD.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/RE8L_5t7TMa.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/excited.png`:'/feelingEmoji/victory.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Excited':'Victory'}</p>
         </div>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/yz/r/TLm2OJzKubg.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/yY/r/c0kohwdzdZ7.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/cool.png`:'/feelingEmoji/anniversary.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Cool':'Anniversary'}</p>
         </div>
         <div onClick={(event)=>chooseFeelingsActivity(event)} className={newPost_Feeling.feelingEmojiBaseDiv}>
           <div className={newPost_Feeling.feelingEmojiDiv} >
-          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`https://static.xx.fbcdn.net/rsrc.php/v3/yL/r/D5AOH5Rt9K8.png`:'https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/CoOltLmRlf7.png'}`} width="20px" height="20px"></img>
+          <img alt=""  referrerpolicy="origin-when-cross-origin" src={`${emojiFeelingCelebration?`/feelingEmoji/crazy.png`:'/feelingEmoji/fathersday.png'}`} width="20px" height="20px"></img>
           </div>
           <p className={newPost_Feeling.emojiText}>{emojiFeelingCelebration?'Crazy':"Father's day"}</p>
         </div>
         
     
         </div>
-        </div>:
+        </div>:!enableProgress?
       <div> {/* div for before show activities */}
       <span
        
@@ -297,7 +365,7 @@ function NewPostModal(obj) {
       <div className={`${newPost_modal.postFrame}`}>
         
         <textarea
-        value={postText}
+        value={postText?postText:''}
           maxLength="140"
           class={`
         ${newPost_modal.textarea_style} 
@@ -327,8 +395,13 @@ function NewPostModal(obj) {
            </div> 
            </div>
              <div className={`${newPost_modal.postContentDiv} local`}>
-              {uploadVideo.map(()=>{
-                return <h1> hello world </h1>
+              {uploadVideoImage.map((currentData)=>{
+               var blobData = URL.createObjectURL(currentData)
+                if(currentData.type.split('/')[0]=='video'){
+                  return <video className={newPost_modal.postVidImg} src={blobData}> </video>
+                } else if(currentData.type.split('/')[0]=='image'){
+                  return <img className={newPost_modal.postVidImg} src={blobData}/>
+                }
               })}
              </div>
         </div>:null}
@@ -417,8 +490,47 @@ function NewPostModal(obj) {
         title ='now button is disable'
         text="Add Post"
       />}
-      </div> /* div for before show activities */
-      }
+   
+
+   </div>: enableProgress?<div style={{width:'100%',display:'flex',flexWrap:'wrap'}}>
+    { uploadVideoImage.map((unwantData,index)=>{
+       return  <div className={newPost_modal.progressBarStyle} style={uploadVideoImage.length==1?{
+         width:'100%',
+         borderRadius:'3px',
+         boxShadow:'rgb(200, 198, 198) 0px 0px 3px 0.3px',
+         padding:'5px',
+         marginTop:'5px',
+         height:'30px',
+         paddingBottom:'10px'
+         
+         
+        }:
+        {width:'47%',
+         borderRadius:'3px',
+         boxShadow:'rgb(200, 198, 198) 0px 0px 3px 0.3px',
+         padding:'5px',
+         marginTop:'5px',
+         height:'30px',
+         paddingBottom:'10px'
+        }}> <div> <div  style={{backgroundColor:`rgb(87, ${postProgress[index].percent*2}, 34)`,borderRadius:'2px',color:'white',height:'8px',width:postProgress[index].percent+'%'}}></div></div> 
+     
+        <h6 style={{marginTop:'0px',marginBottom:'0px'}}>
+            <span style={{fontSize:'10px',overflow:'hidden'}}>{unwantData.name}</span>
+          <span style={{fontSize:'10px'}}>
+          {postProgress[index].percent!=100?`
+          ${postProgress[index].loading?
+           postProgress[index].loading:''} / 
+          ${postProgress[index].total?
+           postProgress[index].total:''} | 
+          ${postProgress[index].percent?
+           postProgress[index].percent:''}%`:'completed'} 
+           </span>
+        </h6>
+
+        </div>
+        
+      })} </div>:null } 
+
     </Modal>
   );
 }
