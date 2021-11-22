@@ -10,7 +10,7 @@ function FriendPost() {
     const server = 'http://localhost:3001'
     const [imageWidth,setImageWidth]=useState(0)
     const [imageHeight,setImageHeight]=useState(0)
-    const [aa,setPostData]=useState(null)
+    const [aa,setPostData]=useState([])
     useEffect(()=>{
 
          axios.get(`${server}/fetch-post`).then(async(response)=>{
@@ -53,7 +53,6 @@ function FriendPost() {
             ]}
         ]
         
-    
    
     function resizeWidth(){
         if(window.innerWidth<=1150 && window.innerWidth>1000){
@@ -94,6 +93,7 @@ function FriendPost() {
        }
        
     },[imageWidth])
+    
     
     // function aa(){
     //     fetchData.map((postData,i)=>{
@@ -140,7 +140,8 @@ function FriendPost() {
     
     return (
         <div>
-            {aa?aa.map((postData,i)=>{
+            {aa.length>0?aa.map((postData,i)=>{
+                
               return   <div className={`${friend_post.base_post} ${new_post.base_new_post}`}>
               <div className={`${friend_post.user_profile_base}`}>
                 <div className={`${friend_post.user_profile_base}`}><img className={`${friend_post.profile_img}`} src="Screenshot (334).png" alt="" /> <p className={`${friend_post.userName}`}>User Name {postData.feelingsEmoji?
@@ -155,7 +156,7 @@ function FriendPost() {
                   <Carousel  className={`${friend_post.customSlider} custom-slider`} > 
                    {postData.post.map((content,index)=>{
                        if(content.type=='image'){
-                        return <div className={`${friend_post.img_bg}`}  > <img style={{objectFit:'none',opacity:'0.8'}} className={`${friend_post.img} ${postData.id} postedImages112`} src={content.data} alt="" />
+                        return <div className={`${friend_post.img_bg}`}  > <img style={{objectFit:'cover',opacity:'0.8'}} className={`${friend_post.img} ${postData.id} postedImages112`} src={content.data} alt="" />
                          <img  className={`${friend_post.img} ${postData.id} postedImages112`} src={content.data} alt="" />
                         </div>
                        } 
@@ -193,7 +194,6 @@ function FriendPost() {
                   </div>
               </div>
               <hr/>
-              
               <div className={`${friend_post.like_content}`}>
                   <div className={`${friend_post.like_content} ${friend_post.comments}`}>
                   <FaThumbsUp />

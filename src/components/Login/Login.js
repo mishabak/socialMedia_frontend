@@ -64,10 +64,11 @@ function Login() {
 
   useEffect(() => {
     const token = cookies.get("userJwt");
+    console.log('error not  found',token)
     if (token) {
       history.push("/");
     }
-  });
+  },[]);
 
   return (
     <div className={LoginCSS.container}>
@@ -103,13 +104,14 @@ function Login() {
 
           {passwordError ? <a>Invalid password</a> : null}
 
-          <div className="submit-btn">
+          <div  > {/*className="submit-btn" */}
             <button
               type="submit"
               className={`${LoginCSS.btn} ${LoginCSS.currentStyle}`}
             >
               SIGN IN
             </button>
+            <a style={{alignSelf:'center',marginLeft:'11px',color:'#8897ac'}} href="/sign-up">Signup</a>
           </div>
         </div>
       </form>

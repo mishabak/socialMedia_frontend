@@ -9,10 +9,10 @@ import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { Link, useHistory } from 'react-router-dom'
 
-const cookies =new Cookies()
 const server = 'http://localhost:3001'
 
 function SignUp() {
+  const cookies =new Cookies()
  const history = useHistory();
   const moment = require('../../../node_modules/moment');
   const [currentEmail,stateEmail]=useState(null)
@@ -69,13 +69,12 @@ function SignUp() {
       setValidPhone(false)
     })
   },[currentPhone])
-  // useEffect(()=>{
-  //   const token = cookies.get('userJwt')
-  //   if(token){
-  //     history.push('/')
-  //   }
-  // })
-  cookies.remove('userJwt')
+  useEffect(()=>{
+    const token = cookies.get('userJwt')
+    if(token){
+      history.push('/')
+    }
+  })
   const validation =values =>{
     const error ={}
     // for validate required elements
@@ -186,8 +185,8 @@ function SignUp() {
               <label className="text-grey " htmlFor="">Female</label>
             </div>
            {formic.errors && formic.touched.gender?<h1 style={{fontSize:'12px',color:'#808ea2',textAlign:'center'}} >{formic.errors.gender}</h1>:null} 
-            <div className='submit-btn'>
-            <Button  class='currentStyle btn' type='submit'text='SIGN UP'/>
+            <div style={{display:'flex',justifyContent:'center',alignItems:'center'}} >{/*className='submit-btn'*/} 
+            <Button  class='currentStyle btn' type='submit'text='SIGN UP'/> <a style={{marginLeft:'11px',color:'#8897ac'}} href="/login">Login</a>
             </div>
           </form>
         </div>

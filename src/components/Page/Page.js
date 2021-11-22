@@ -33,12 +33,12 @@ function Page() {
       setRightBar(true);
     }
   }, [size]);
-  // useEffect(()=>{
-  //   let currentCookies = cookies.get('userJwt')
-  //   if(!currentCookies){
-  //     history.push('/login')
-  //   }
-  // })
+  useEffect(()=>{
+    let currentCookies = cookies.get('userJwt')
+    if(!currentCookies){
+      history.push('/login')
+    }
+  })
 
   function updateSize() {
     setSize(window.innerWidth);
