@@ -44,13 +44,20 @@ function SignUp() {
     reEnterPassword:''
   }
   const onSubmit =(values)=>{
-    axios.post(`${server}/sign-up`,values).then((response)=>{
-    cookies.set('userJwt',response.data.token)
-    localStorage.setItem('userId',response.data.userId)
-    localStorage.setItem('userName',response.data.userName)
-    localStorage.setItem('userLogin',true)
-    history.push('/')
+    
+    
+    axios.post(`${server}/auth-email`,{email:values.email}).then((response)=>{
+      cookies.set('authEmail',response.data)
+    }).catch(()=>{
+
     })
+    // axios.post(`${server}/sign-up`,values).then((response)=>{
+    // cookies.set('userJwt',response.data.token)
+    // localStorage.setItem('userId',response.data.userId)
+    // localStorage.setItem('userName',response.data.userName)
+    // localStorage.setItem('userLogin',true)
+    // history.push('/')
+    // })
   }
   useEffect(()=>{
     var data ={email:formic.values.email}

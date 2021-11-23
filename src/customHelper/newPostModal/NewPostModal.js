@@ -1,4 +1,4 @@
-import { generateUploadURL ,deleteUploadedFILE} from '../../awsHelper/S3helper';
+import { generateUploadURL} from '../../../awsHelper/S3helper';
 import newPost_Feeling from './newPostFeeling.module.css'
 import newPost_modal from "./NewPostModal.module.css";
 import { React, useState, useEffect } from "react";

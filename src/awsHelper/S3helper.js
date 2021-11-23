@@ -1,8 +1,8 @@
-import React from 'react'
+
 import aws from 'aws-sdk'
 import crypto,{ randomBytes } from 'crypto'
 import env from "react-dotenv";
-
+console.log('error sfdsfs');
 const region = 'ap-south-1'
 const bucketName = 'socialmedia-react-project'
 const accessKeyId = env.AWS_ACCESS_KEY_ID
@@ -30,6 +30,6 @@ export async function generateUploadURL(){
     return uploadURL
 }
 
-export async function deleteUploadedFILE(){
-    s3.deleteObject({Bucket:bucketName,Key:'2e8014b0354965380cc8109aefff799c'}).promise()
-}
+// export async function deleteUploadedFILE(){
+//     s3.deleteObject({Bucket:bucketName,Key:'2e8014b0354965380cc8109aefff799c'}).promise()
+// }

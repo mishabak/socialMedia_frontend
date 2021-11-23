@@ -10,7 +10,6 @@ import {FaUserCircle,
     FaBell,
     FaUser,} from "react-icons/fa"
     function RightSideBar() {
-        
       return (
           <div className={`${rightCSS.base_padding}`}>
               <div className={`${rightCSS.inner_div} ${navCSS.box_shadow_inner} ${rightCSS.text_color_d} ${rightCSS.position_sticky}`}>
