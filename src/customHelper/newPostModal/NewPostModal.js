@@ -9,15 +9,11 @@ import "./newPostModal.css";
 import axios from 'axios'
 import {
   FaChevronCircleLeft,
-  FaClosedCaptioning,
   FaChevronLeft,
-  FaTimesCircle,
   FaPhotoVideo,
   FaLaughWink,
   FaSmileBeam,
-  FaSearch,
   FaTimes,
-  FaCross,
   FaTh,
 } from "react-icons/fa";
 const server = 'http://localhost:3001'
